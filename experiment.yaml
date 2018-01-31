@@ -43,7 +43,7 @@ workloads:
         connection: "200"
     resources:
         resource: csdc
-  - name:
+  - name: stressor
     generator: git:git@gitlab.gwdg.de:mikelangelo/workload-stressor.git[feature/msrba]
     params:
         sleep_time: 600
