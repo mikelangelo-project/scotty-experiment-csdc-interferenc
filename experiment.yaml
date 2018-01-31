@@ -1,0 +1,54 @@
+describtion: |
+  "This is a experiment ..."
+resources:
+  - name: csdc
+    generator: git:git@gitlab.gwdg.de:mikelangelo/csdc_resource_deployment.git[feature/scotty]
+    params:
+        experiment_name: 'csdc_workload'
+        OpenStack_auth_url: <%= ENV['OS_AUTH_URL'] %>
+        OpenStack_username: <%= ENV['OS_USERNAME'] %>
+        OpenStack_password: <%= ENV['OS_PASSWORD'] %>
+        OpenStack_tenant_name: <%= ENV['OS_PROJECT_NAME'] %>
+        OpenStack_project_name: <%= ENV['OS_PROJECT_NAME'] %>
+        stack_template: stack.yaml
+        stack_server_no: 1
+        server_no: "2"
+        server_threads: "2"
+        memory: "8192"
+        object_size: "275"
+  - name: stressor
+    generator: git:git@gitlab.gwdg.de:mikelangelo/resource-stressor.git[feature/msrba]
+    params:
+        auth_url: <%= ENV['OS_AUTH_URL'] %>
+        username: <%= ENV['OS_USERNAME'] %>
+        password: <%= ENV['OS_PASSWORD'] %>
+        project_name: <%= ENV['OS_PROJECT_NAME'] %>
+        instances: 1
+        flavor: "kvm.m2.medium"
+        debug: False
+workloads:
+  - name: csdc
+    generator: git:git@gitlab.gwdg.de:mikelangelo/cs-dataCaching.git
+    params:
+        server_no: "2"
+        server_threads: "2"
+        memory: "8192"
+        object_size: "275"
+        client_threats: "2"
+        interval: "1"
+        server_memory: "16384"
+        scaling_factor: "20"
+        duration: "1200"
+        fraction: "0.8"
+        connection: "200"
+    resources:
+        resource: csdc
+  - name:
+    generator: git:git@gitlab.gwdg.de:mikelangelo/workload-stressor.git[feature/msrba]
+    params:
+        sleep_time: 600
+        stress-ng-params:
+            cache: '10'
+            cache-level: '1'
+    resources:
+        stressor_vms: stressor
