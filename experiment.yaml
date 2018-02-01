@@ -28,7 +28,7 @@ resources:
         debug: False
 workloads:
   - name: csdc
-    generator: git:git@gitlab.gwdg.de:mikelangelo/cs-dataCaching.git
+    generator: git:git@gitlab.gwdg.de:mikelangelo/cs-dataCaching.git[feature/workload]
     params:
         server_no: "2"
         server_threads: "2"
@@ -38,7 +38,7 @@ workloads:
         interval: "1"
         server_memory: "16384"
         scaling_factor: "20"
-        duration: "1200"
+        duration: "120"
         fraction: "0.8"
         connection: "200"
     resources:
