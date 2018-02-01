@@ -48,7 +48,7 @@ workloads:
     params:
         sleep_time: 600
         stress-ng-params:
-            cache: '10'
+          - cache: '10'
             cache-level: '1'
     resources:
         stressor_vms: stressor
